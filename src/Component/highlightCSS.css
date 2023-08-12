@@ -1,0 +1,27 @@
+.hover-item:hover{
+    background-color: #eee;
+}
+
+.highlight{
+    background-color: rgb(215, 215, 215);
+}
+
+.highlight__yellow{
+    background-color: yellow;
+}
+.list {
+    list-style:disc outside none;
+    display: flex;
+    font-size: 18px;
+   
+}
+.title{
+    font-size: 18px;
+}
+.field{
+    margin-top: -100px;
+    margin-bottom: -50px;
+}
+.tag{
+    display: list-item;
+}

@@ -1,0 +1,13 @@
+.ans__true{
+    border:  1px solid green;
+    margin: 0 3px 0 3px;
+}
+
+.ans__false{
+    margin: 0 1px 0 1px;
+    border: 1px solid red;
+}
+
+.tooltip{
+    margin-top: 30px;
+}
