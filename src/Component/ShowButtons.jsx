@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Button, HStack, Text } from "@chakra-ui/react";
-import { BiUndo, BiCheck, BiPencil } from "react-icons/bi";
+import { BiUndo, BiCheck, BiPencil, BiShuffle } from "react-icons/bi";
 import "./highlightCSS.css";
 
 const ShowButtons = ({
@@ -9,6 +9,7 @@ const ShowButtons = ({
   highlight,
   handleDone,
   inputText,
+  handleAutoBlank,
   isHighlight_Done,
 }) => {
   return (
@@ -49,6 +50,20 @@ const ShowButtons = ({
             <BiPencil fontSize={"30px"} color={"cyan"} />
           </Button>
           <Text className="textshift">Highlight</Text>
+        </Box>
+      )}
+      {!isHighlight_Done && (
+        <Box mx={5} onClick={handleAutoBlank} style={{ marginRight: "10px" }}>
+          <Button
+            color={"cyan"}
+            backgroundColor={"black"}
+            _hover={"black"}
+            _focus={{ border: "none" }}
+            variant={"unstyled"}
+          >
+            <BiShuffle fontSize={"30px"} color={"cyan"} />
+          </Button>
+          <Text className="textshift">Auto-blank</Text>
         </Box>
       )}
       {isHighlight_Done && (

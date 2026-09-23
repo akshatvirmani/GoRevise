@@ -1,9 +1,18 @@
-import { Box, Button, Center, Flex, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React from "react";
 import { MdOutlineCreate } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 function Create() {
+  const cardBg = useColorModeValue("gray.100", "gray.700");
   return (
     <>
       <Navbar color="gray.200" />
@@ -11,7 +20,7 @@ function Create() {
         <Flex
           h={"380px"}
           w={"350px"}
-          bg={"gray.100"}
+          bg={cardBg}
           flexDir={"column"}
           justifyContent={"space-around"}
           alignItems={"center"}

@@ -1,11 +1,33 @@
-import { Box, Button, Center, Flex, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  Text,
+  useColorModeValue,
+  useToast,
+} from "@chakra-ui/react";
 import React from "react";
-import { MdOutlineCreate } from "react-icons/md";
-import { MdReply } from "react-icons/md";
+import { MdOutlineCreate, MdReply, MdEdit, MdShare } from "react-icons/md";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
+import { buildShareUrl } from "../utils/shareQuiz";
 
-const SaveAndTakeQuiz = ({ handleSave }) => {
+const SaveAndTakeQuiz = ({ handleSave, handleEditBlanks, shareableQuiz }) => {
+  const cardBg = useColorModeValue("gray.100", "gray.700");
+  const toast = useToast();
+
+  const handleCopyShareLink = async () => {
+    const url = buildShareUrl(shareableQuiz);
+    try {
+      await navigator.clipboard.writeText(url);
+      toast({ title: "Share link copied!", status: "success", duration: 2000 });
+    } catch {
+      toast({ title: "Couldn't copy link", status: "error", duration: 2000 });
+    }
+  };
+
   return (
     <>
       <Navbar color="gray.200" />
@@ -27,40 +49,10 @@ const SaveAndTakeQuiz = ({ handleSave }) => {
         </Link>
       </Center>
       <Center pt="24" mt={"-60px"}>
-        {/* <Flex
-          h={"380px"}
-          w={"350px"}
-          bg={"gray.100"}
-          flexDir={"column"}
-          justifyContent={"space-around"}
-          alignItems={"center"}
-          rounded={"3xl"}
-        >
-          <Box textAlign={"center"}>
-            <Heading>SaveAndTakeQuiz</Heading>
-            <Text mt={7} fontSize={"xl"}>
-              SaveAndTakeQuiz your fill-in quiz test as a pdf document
-            </Text>
-          </Box>
-          <Box mt={-5}>
-            <Button
-              rounded={"full"}
-              size={"lg"}
-              mt={"auto"}
-              px={6}
-              bg={"cyan.400"}
-              _hover={{ bg: "cyan.500" }}
-              _focus={{ border: "none" }}
-            >
-              <MdOutlineCreate fontSize={"24px"} />
-              <Text>SaveAndTakeQuiz</Text>
-            </Button>
-          </Box>
-        </Flex> */}
         <Flex
-          h={"380px"}
+          h={"420px"}
           w={"350px"}
-          bg={"gray.100"}
+          bg={cardBg}
           flexDir={"column"}
           justifyContent={"space-around"}
           alignItems={"center"}
@@ -76,11 +68,10 @@ const SaveAndTakeQuiz = ({ handleSave }) => {
               We will be rooting for you.
             </Text>
           </Box>
-          <Box mt={-5}>
+          <Box mt={-5} display={"flex"} flexDir={"column"} gap={3} alignItems={"center"}>
             <Button
               rounded={"full"}
               size={"lg"}
-              mt={"auto"}
               px={6}
               bg={"cyan.400"}
               _hover={{ bg: "cyan.500" }}
@@ -89,6 +80,26 @@ const SaveAndTakeQuiz = ({ handleSave }) => {
             >
               <MdOutlineCreate fontSize={"24px"} />
               <Text>Quiz</Text>
+            </Button>
+            <Button
+              rounded={"full"}
+              size={"sm"}
+              px={6}
+              variant={"outline"}
+              onClick={handleEditBlanks}
+            >
+              <MdEdit fontSize={"18px"} />
+              <Text ml={1}>Edit Blanks</Text>
+            </Button>
+            <Button
+              rounded={"full"}
+              size={"sm"}
+              px={6}
+              variant={"outline"}
+              onClick={handleCopyShareLink}
+            >
+              <MdShare fontSize={"18px"} />
+              <Text ml={1}>Copy Share Link</Text>
             </Button>
           </Box>
         </Flex>

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function ResultButtons({
   handleViewScore_and_done,
   viewScore,
-  handleSubmit,
+  onOpenScore,
   viewDone,
 }) {
   return (
@@ -23,7 +23,7 @@ function ResultButtons({
       cursor="pointer"
     >
       {viewScore && (
-        <Box mx={5} onClick={handleSubmit}>
+        <Box mx={5} onClick={onOpenScore}>
           <Button
             color={"cyan"}
             backgroundColor={"black"}
@@ -52,7 +52,7 @@ function ResultButtons({
       )} */}
       {viewScore && (
         <Link to="/">
-          <Box mx={5} onClick={(e) => handleViewScore_and_done()}>
+          <Box mx={5}>
             <Button
               color={"cyan"}
               backgroundColor={"black"}

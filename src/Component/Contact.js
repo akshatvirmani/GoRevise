@@ -14,6 +14,7 @@ import {
   InputGroup,
   InputLeftElement,
   Textarea,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { MdPhone, MdEmail, MdLocationOn, MdOutlineEmail } from "react-icons/md";
 import { BsPerson } from "react-icons/bs";
@@ -23,16 +24,18 @@ import emailjs from "@emailjs/browser";
 
 export default function Contact() {
   const form = useRef();
+  const formCardBg = useColorModeValue("white", "gray.700");
+  const formTextColor = useColorModeValue("#0B0E3F", "white");
 
   const sendEmail = (e) => {
     e.preventDefault();
 
     emailjs
       .sendForm(
-        "service_kuk0sv9",
-        "template_jn7337e",
+        process.env.REACT_APP_EMAILJS_SERVICE_ID,
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
         form.current,
-        "S5eOLHrQhzTPztdZy"
+        process.env.REACT_APP_EMAILJS_PUBLIC_KEY
       )
       .then(
         (result) => {
@@ -114,8 +117,8 @@ export default function Contact() {
                     </Box>
                   </WrapItem>
                   <WrapItem>
-                    <Box bg="white" borderRadius="lg">
-                      <Box m={8} color="#0B0E3F">
+                    <Box bg={formCardBg} borderRadius="lg">
+                      <Box m={8} color={formTextColor}>
                         <VStack spacing={5}>
                           <FormControl name="user_name">
                             <FormLabel>Name</FormLabel>

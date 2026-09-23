@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import "./highlightCSS.css";
-import { Box, Button, HStack, Text } from "@chakra-ui/react";
+import { Box, Button, HStack, Text, useColorModeValue } from "@chakra-ui/react";
+import { useLocation } from "react-router-dom";
 import Test from "./TestHome";
 import Navbar from "./Navbar";
 import { BsCheck2Circle } from "react-icons/bs";
 import TextareaAutosize from "react-textarea-autosize";
 import Instruction from "./Instruction";
+import { decodeQuiz } from "../utils/shareQuiz";
 // Taking input
 function InputHighlight() {
-  const [para, setPara] = useState("");
-  const [showInput, setShowInpt] = useState(true);
+  const cardBg = useColorModeValue("white", "gray.700");
+  const textColor = useColorModeValue("black", "white");
+  const location = useLocation();
+  const savedQuiz = location.state?.savedQuiz;
+  const sharedQuiz = !savedQuiz
+    ? decodeQuiz(new URLSearchParams(location.search).get("share"))
+    : null;
+  const activeQuiz = savedQuiz || sharedQuiz;
+  const [para, setPara] = useState(activeQuiz?.text || "");
+  const [showInput, setShowInpt] = useState(!activeQuiz);
 
   const handleInput = (e) => {
     setPara(e.target.value);
@@ -38,7 +48,7 @@ function InputHighlight() {
           <Navbar color="white" />
           <Instruction />
 
-          <Box bg={"white"} m={20} rounded={"2xl"}>
+          <Box bg={cardBg} m={20} rounded={"2xl"}>
             <HStack
               my={5}
               bg="black"
@@ -78,13 +88,20 @@ function InputHighlight() {
                 paddingLeft: "20px",
                 resize: "none",
                 overflow: "hidden",
+                backgroundColor: "transparent",
+                color: textColor,
               }}
               onChange={(e) => handleInput(e)}
             />
           </Box>
         </Box>
       ) : (
-        <Test inputText={para} editText={editText} />
+        <Test
+          inputText={para}
+          editText={editText}
+          initialIndex={activeQuiz?.blankIndexes}
+          quizId={savedQuiz?.id}
+        />
       )}
     </>
   );

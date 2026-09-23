@@ -8,9 +8,89 @@ import {
   Button,
   Image,
   IconButton,
+  VStack,
+  HStack,
+  useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import { getSavedQuizzes, deleteQuiz, getQuizStats } from "../utils/quizStorage";
+import { buildShareUrl } from "../utils/shareQuiz";
+
+function SavedQuizzes() {
+  const navigate = useNavigate();
+  const toast = useToast();
+  const rowBg = useColorModeValue("gray.100", "gray.700");
+  const [quizzes, setQuizzes] = useState(getSavedQuizzes());
+
+  if (quizzes.length === 0) return null;
+
+  const handleDelete = (id) => {
+    deleteQuiz(id);
+    setQuizzes(getSavedQuizzes());
+  };
+
+  const handleShare = async (quiz) => {
+    try {
+      await navigator.clipboard.writeText(buildShareUrl(quiz));
+      toast({ title: "Share link copied!", status: "success", duration: 2000 });
+    } catch {
+      toast({ title: "Couldn't copy link", status: "error", duration: 2000 });
+    }
+  };
+
+  const preview = (text) =>
+    text.length > 60 ? `${text.slice(0, 60)}...` : text;
+
+  return (
+    <Box py={{ base: 8, md: 12 }}>
+      <Heading size={"lg"} mb={4}>
+        My Quizzes
+      </Heading>
+      <VStack align={"stretch"} spacing={3}>
+        {quizzes.map((quiz) => {
+          const stats = getQuizStats(quiz);
+          return (
+            <HStack
+              key={quiz.id}
+              justify={"space-between"}
+              p={4}
+              bg={rowBg}
+              rounded={"xl"}
+              flexWrap={"wrap"}
+            >
+              <Box>
+                <Text noOfLines={1}>{preview(quiz.text)}</Text>
+                <Text fontSize={"sm"} color={"gray.500"}>
+                  {stats
+                    ? `${stats.attemptCount} attempt${stats.attemptCount > 1 ? "s" : ""} · best ${stats.bestScorePct}%`
+                    : "Not attempted yet"}
+                </Text>
+              </Box>
+              <HStack>
+                <Button
+                  size={"sm"}
+                  colorScheme={"cyan"}
+                  onClick={() => navigate("/test", { state: { savedQuiz: quiz } })}
+                >
+                  Take Quiz
+                </Button>
+                <Button size={"sm"} variant={"outline"} onClick={() => handleShare(quiz)}>
+                  Share
+                </Button>
+                <Button size={"sm"} variant={"ghost"} onClick={() => handleDelete(quiz.id)}>
+                  Delete
+                </Button>
+              </HStack>
+            </HStack>
+          );
+        })}
+      </VStack>
+    </Box>
+  );
+}
 
 export default function Home() {
   return (
@@ -93,6 +173,7 @@ export default function Home() {
             </Box>
           </Flex>
         </Stack>
+        <SavedQuizzes />
       </Container>
     </>
   );

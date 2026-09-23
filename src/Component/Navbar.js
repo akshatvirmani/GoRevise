@@ -1,11 +1,26 @@
 import React from "react";
-import { Box, Center, Flex, Heading, Text, chakra } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  Heading,
+  IconButton,
+  Text,
+  chakra,
+  useColorMode,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { BiSun, BiMoon } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
-function Navbar({ color }) {
+function Navbar({ color = "white" }) {
+  const { colorMode, toggleColorMode } = useColorMode();
+  const bg = useColorModeValue(color, "gray.700");
+  const headingColor = useColorModeValue("black", "white");
+
   return (
     <Center>
-      <Box bg={color} m={10} w={"70rem"} borderRadius={"25px"} py="2">
+      <Box bg={bg} m={10} w={"70rem"} borderRadius={"25px"} py="2">
         <Flex
           justifyContent={"space-around"}
           alignItems={"center"}
@@ -13,7 +28,7 @@ function Navbar({ color }) {
         >
           <Link to="/">
             <chakra.a>
-              <Heading color={"black"}>
+              <Heading color={headingColor}>
                 Go
                 <Text as={"span"} color={"teal.300"}>
                   Revise
@@ -22,13 +37,22 @@ function Navbar({ color }) {
             </chakra.a>
           </Link>
           <Flex
-            w={"200px"}
+            w={"240px"}
             justifyContent={"space-between"}
             alignItems={"center"}
             fontSize={"lg"}
+            color={headingColor}
           >
             <Link to="/">Home</Link>
             <Link to="/contact">Contact</Link>
+            <IconButton
+              aria-label={"Toggle color mode"}
+              icon={colorMode === "light" ? <BiMoon /> : <BiSun />}
+              onClick={toggleColorMode}
+              size={"sm"}
+              variant={"ghost"}
+              color={headingColor}
+            />
           </Flex>
         </Flex>
       </Box>
