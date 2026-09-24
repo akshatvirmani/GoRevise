@@ -1,38 +1,49 @@
-// import { Box } from "@chakra-ui/react";
 import "./App.css";
 import Contact from "./Component/Contact";
 import Create from "./Component/Create";
-// import Highlight from "./Component/Highlight";
 import Home from "./Component/Home";
-// import Navbar from "./Component/Navbar";
 import Quiz from "./Component/Quiz";
-// import Suffix from "./Component/Suffix";
-// import Updated from "./Component/Updated";
-// import Input from "./Component/Input";
 import {
   BrowserRouter as Router,
-  // Switch,
   Route,
   Routes,
-  // Link
+  useLocation,
 } from "react-router-dom";
-// import HighlightTwo from "./Component/Highlight_2";
+import { AnimatePresence, motion } from "framer-motion";
 import InputHighlight from "./Component/Input_highlight";
+
+function PageTransition({ children }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.22, ease: "easeInOut" }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function AnimatedRoutes() {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" exact element={<PageTransition><Home /></PageTransition>} />
+        <Route path="/quiz" exact element={<PageTransition><Quiz /></PageTransition>} />
+        <Route path="/test" exact element={<PageTransition><InputHighlight /></PageTransition>} />
+        <Route path="/create" exact element={<PageTransition><Create /></PageTransition>} />
+        <Route path="/contact" exact element={<PageTransition><Contact /></PageTransition>} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" exact element={<Home />} />
-        <Route path="/quiz" exact element={<Quiz />} />
-        {/* <Route path="/highlight" exact element={<Highlight />} /> */}
-        {/* <Route path="/highlight" exact element={<HighlightTwo />} /> */}
-        <Route path="/test" exact element={<InputHighlight />} />
-        <Route path="/create" exact element={<Create />} />
-        <Route path="/contact" exact element={<Contact />} />
-        {/* <Route path="/input" exact element={<Input />} /> */}
-        {/* <Route path="/suffix" exact element={<Suffix />} /> */}
-        {/* <Route path="/updated" exact element={<Updated />} /> */}
-      </Routes>
+      <AnimatedRoutes />
     </Router>
   );
 }

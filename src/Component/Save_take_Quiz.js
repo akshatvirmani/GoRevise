@@ -58,6 +58,8 @@ const SaveAndTakeQuiz = ({ handleSave, handleEditBlanks, shareableQuiz }) => {
           alignItems={"center"}
           rounded={"3xl"}
           marginLeft="20px"
+          transition={"transform 0.2s ease, box-shadow 0.2s ease"}
+          _hover={{ transform: "translateY(-6px)", boxShadow: "xl" }}
         >
           <Box textAlign={"center"}>
             <Heading>Take the Quiz</Heading>

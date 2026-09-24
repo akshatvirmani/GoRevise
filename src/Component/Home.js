@@ -60,6 +60,8 @@ function SavedQuizzes() {
               bg={rowBg}
               rounded={"xl"}
               flexWrap={"wrap"}
+              transition={"transform 0.15s ease, box-shadow 0.15s ease"}
+              _hover={{ transform: "translateY(-3px)", boxShadow: "md" }}
             >
               <Box>
                 <Text noOfLines={1}>{preview(quiz.text)}</Text>

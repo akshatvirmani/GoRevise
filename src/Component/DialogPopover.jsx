@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -14,9 +14,11 @@ import {
   HStack,
   Circle,
   Flex,
-  //   Lorem,
-  // useDisclosure,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import Confetti from "./Confetti";
+
+const MotionCircle = motion(Circle);
 
 const ReturnFocus = ({
   isOpen,
@@ -25,18 +27,34 @@ const ReturnFocus = ({
   correct_ans_count,
   count_blank,
 }) => {
-
-  // console.log("PPop up called", correct_ans_count(), count_blank);
   const ca = correct_ans_count();
   const percentage = Math.round((ca / count_blank) * 100);
+  const [displayPercentage, setDisplayPercentage] = useState(0);
+
+  // Count the score up from 0 whenever the modal opens, instead of just snapping to the final number.
+  useEffect(() => {
+    if (!isOpen) {
+      setDisplayPercentage(0);
+      return;
+    }
+    let frame;
+    const start = performance.now();
+    const duration = 700;
+    const tick = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      setDisplayPercentage(Math.round(progress * percentage));
+      if (progress < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [isOpen, percentage]);
+
   return (
     <>
-      {/* <Button mt={5} onClick={onOpen}>
-        Open Modal
-      </Button> */}
       <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay  />
-        <ModalContent size="4xl">
+        <ModalOverlay />
+        <ModalContent size="4xl" position="relative" overflow="hidden">
+          {isOpen && percentage >= 50 && <Confetti key={String(isOpen)} />}
           <ModalHeader
             my={"4"}
             textAlign="center"
@@ -50,7 +68,11 @@ const ReturnFocus = ({
           </ModalHeader>
           <Box>
             <Center>
-              <Circle
+              <MotionCircle
+                key={String(isOpen)}
+                initial={{ scale: 0.4, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 260, damping: 16 }}
                 size="110px"
                 bg="#f0f0f0"
                 color="back"
@@ -58,8 +80,8 @@ const ReturnFocus = ({
                 fontWeight="bold"
                 mt={"-25px"}
               >
-                <Text>{percentage}%</Text>
-              </Circle>
+                <Text>{displayPercentage}%</Text>
+              </MotionCircle>
             </Center>
           </Box>
 
