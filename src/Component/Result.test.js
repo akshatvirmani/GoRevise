@@ -11,6 +11,6 @@ test("renders plain words, correct answers, and wrong answers", () => {
   render(<Result str_arr={str_arr} />);
 
   expect(screen.getByText("the")).toBeInTheDocument();
-  expect(screen.getByText("quick")).toBeInTheDocument();
-  expect(screen.getByText("slow")).toBeInTheDocument();
+  expect(screen.getByText(/quick/)).toBeInTheDocument();
+  expect(screen.getByText(/slow/)).toBeInTheDocument();
 });

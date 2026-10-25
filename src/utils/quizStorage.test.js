@@ -5,6 +5,7 @@ import {
   updateQuiz,
   recordAttempt,
   getQuizStats,
+  getOverallStats,
 } from "./quizStorage";
 
 beforeEach(() => {
@@ -86,5 +87,32 @@ describe("quizStorage", () => {
 
     expect(stats.attemptCount).toBe(2);
     expect(stats.bestScorePct).toBe(100);
+  });
+
+  test("getOverallStats returns zeroed stats when nothing is saved", () => {
+    expect(getOverallStats()).toEqual({
+      totalQuizzes: 0,
+      totalAttempts: 0,
+      bestScorePct: 0,
+      averageScorePct: 0,
+      perfectScores: 0,
+    });
+  });
+
+  test("getOverallStats aggregates across all quizzes", () => {
+    const quizA = saveQuiz({ text: "quiz a", blankIndexes: [0, 1] });
+    const quizB = saveQuiz({ text: "quiz b", blankIndexes: [0] });
+
+    recordAttempt(quizA.id, { correct: 2, total: 2 }); // 100%
+    recordAttempt(quizA.id, { correct: 1, total: 2 }); // 50%
+    recordAttempt(quizB.id, { correct: 1, total: 1 }); // 100%
+
+    const stats = getOverallStats();
+
+    expect(stats.totalQuizzes).toBe(2);
+    expect(stats.totalAttempts).toBe(3);
+    expect(stats.bestScorePct).toBe(100);
+    expect(stats.averageScorePct).toBe(83); // (100 + 50 + 100) / 3 rounded
+    expect(stats.perfectScores).toBe(2);
   });
 });

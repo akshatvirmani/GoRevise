@@ -1,9 +1,8 @@
 import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 
-const COLORS = ["#14dbd1", "#FAC898", "#FF6B6B", "#4ADE80", "#FFD93D", "#A78BFA"];
+const COLORS = ["#FF6B6B", "#FFD23F", "#4ECDC4", "#A78BFA", "#4ADE80", "#FF8580"];
 
-// A small, dependency-free confetti burst built from animated divs.
 function Confetti({ count = 24 }) {
   const pieces = useMemo(
     () =>

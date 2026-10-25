@@ -12,8 +12,8 @@ const InputChange = ({
   disableInput,
   onSubmit,
 }) => {
-  const inputBg = useColorModeValue("white", "#4A5568");
-  const inputColor = useColorModeValue("black", "white");
+  const inputBg = useColorModeValue("#FFFBEB", "#412A7D");
+  const inputColor = useColorModeValue("#2C1C55", "white");
   let i = 0;
   const sortedIndex = [...index].sort((a, b) => a - b);
 
@@ -34,10 +34,10 @@ const InputChange = ({
         <Pdf targetRef={ref} filename="gorevise-quiz-results.pdf">
           {({ toPdf }) => (
             <button
-              style={{ color: "white", backgroundColor: "#FAC898", fontSize: 20 }}
+              className="fun-pdf-btn"
               onClick={toPdf}
             >
-              Generate PDF
+              📄 Save as PDF
             </button>
           )}
         </Pdf>
@@ -51,8 +51,8 @@ const InputChange = ({
               // taking input in input boxes
               const position = i++;
               return (
-                <span key={idx}>
-                  <b>{position + 1}</b>
+                <span key={idx} className="blankWrap">
+                  <b className="blankNumber">{position + 1}</b>
                   <input
                     className="inputBorder"
                     disabled={disableInput}

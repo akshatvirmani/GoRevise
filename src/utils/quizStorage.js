@@ -60,3 +60,21 @@ export function getQuizStats(quiz) {
     lastAttemptAt: attempts[attempts.length - 1].takenAt,
   };
 }
+
+export function getOverallStats() {
+  const quizzes = getSavedQuizzes();
+  const allAttempts = quizzes.flatMap((quiz) => quiz.attempts || []);
+  const scores = allAttempts.map((attempt) =>
+    attempt.total ? Math.round((attempt.correct / attempt.total) * 100) : 0
+  );
+
+  return {
+    totalQuizzes: quizzes.length,
+    totalAttempts: allAttempts.length,
+    bestScorePct: scores.length ? Math.max(...scores) : 0,
+    averageScorePct: scores.length
+      ? Math.round(scores.reduce((sum, s) => sum + s, 0) / scores.length)
+      : 0,
+    perfectScores: scores.filter((s) => s === 100).length,
+  };
+}

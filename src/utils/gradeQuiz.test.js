@@ -30,7 +30,6 @@ describe("gradeAnswers", () => {
   });
 
   test("aligns answers with blank indexes sorted ascending, regardless of input order", () => {
-    // blankIndexes [3, 1] sorts to [1, 3], so answers must be given in that order.
     const graded = gradeAnswers(words, [3, 1], ["quick", "fox"]);
 
     expect(graded[1]).toEqual({ item: "quick", result: true });

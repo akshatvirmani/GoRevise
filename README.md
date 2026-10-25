@@ -14,7 +14,7 @@ GoRevise turns any block of text into a fill-in-the-blank quiz, so you can test 
 
 - [React](https://react.dev/) 17 + [React Router](https://reactrouter.com/) v6
 - [Chakra UI](https://chakra-ui.com/) for styling and components
-- [EmailJS](https://www.emailjs.com/) for the contact form
+- [Framer Motion](https://www.framer.com/motion/) for animations
 - Created with [Create React App](https://create-react-app.dev/)
 
 ## Getting started
@@ -30,18 +30,6 @@ GoRevise turns any block of text into a fill-in-the-blank quiz, so you can test 
 git clone https://github.com/<your-username>/GoRevise.git
 cd GoRevise
 npm install
-```
-
-The contact form uses [EmailJS](https://www.emailjs.com/) to send messages. Copy the example env file and fill in your own EmailJS credentials:
-
-```bash
-cp .env.example .env
-```
-
-```
-REACT_APP_EMAILJS_SERVICE_ID=your_service_id
-REACT_APP_EMAILJS_TEMPLATE_ID=your_template_id
-REACT_APP_EMAILJS_PUBLIC_KEY=your_public_key
 ```
 
 ### Run
@@ -62,6 +50,6 @@ npm test
 
 ```
 src/
-  Component/   # Pages and UI components (Home, Create, Quiz, Contact, etc.)
+  Component/   # Pages and UI components (Home, Create, Quiz, About, Progress, etc.)
   utils/        # Quiz grading logic and local-storage persistence
 ```

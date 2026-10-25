@@ -13,7 +13,9 @@ import ResultButtons from "./ResultButtons";
 import { gradeAnswers, countCorrect } from "../utils/gradeQuiz";
 import { saveQuiz, updateQuiz, recordAttempt } from "../utils/quizStorage";
 const Test = ({ inputText, editText, initialIndex, quizId: initialQuizId }) => {
-  const cardBg = useColorModeValue("white", "gray.700");
+  const cardBg = useColorModeValue("white", "ink.600");
+  const cardBorder = useColorModeValue("ink.700", "sunny.400");
+  const shadowColor = useColorModeValue("#2B2250", "#00000055");
   const [str_arr, setStr_arr] = useState(inputText.split(" ")); //split given input, each word is element of array.
   const finalRef = React.useRef();
   const [show_choice_page, setShow_page] = useState(false);
@@ -56,7 +58,7 @@ const Test = ({ inputText, editText, initialIndex, quizId: initialQuizId }) => {
     setHighlight(true);
   };
 
-  // Automatically blank out a random 20% of the words instead of hand-picking each one.
+  // blank out a random 20% of the words
   const handleAutoBlank = () => {
     const wordIndexes = str_arr
       .map((word, idx) => idx)
@@ -86,7 +88,7 @@ const Test = ({ inputText, editText, initialIndex, quizId: initialQuizId }) => {
     setHideBtn(true);
   };
 
-  // Go back from the save/take-quiz choice screen to adjust which words are blanked.
+  // back to word selection from the choice screen
   const handleEditBlanks = () => {
     setShow_page(false);
     setDisable_input_box(false);
@@ -138,14 +140,8 @@ const Test = ({ inputText, editText, initialIndex, quizId: initialQuizId }) => {
           shareableQuiz={{ text: inputText, blankIndexes: index }}
         />
       ) : (
-        <Box
-          overflow="hidden"
-          bgImage={"/bg.png"}
-          minH={"100vh"}
-          bgRepeat={"no-repeat"}
-          bgSize={"cover"}
-        >
-          <Navbar color="white" />
+        <Box overflow="hidden" minH={"100vh"}>
+          <Navbar />
           {/* viewscore popup */}
           <ReturnFocus
             isOpen={isOpen}
@@ -157,7 +153,15 @@ const Test = ({ inputText, editText, initialIndex, quizId: initialQuizId }) => {
           />
           <Instruction />
 
-          <Box bg={cardBg} m={20} rounded={"2xl"}>
+          <Box
+            bg={cardBg}
+            m={20}
+            rounded={"24px"}
+            border="5px solid"
+            borderColor={cardBorder}
+            boxShadow={`10px 10px 0 0 ${shadowColor}`}
+            overflow="hidden"
+          >
             {!hideBtn && (
               <ShowButtons
                 editText={editText}
@@ -179,7 +183,7 @@ const Test = ({ inputText, editText, initialIndex, quizId: initialQuizId }) => {
             )}
             {/* </HStack> */}
 
-            <Text id="new_para" as={"p"} mt={"-35px"} fontSize={"lg"} p="8">
+            <Text id="new_para" as={"p"} fontSize={"lg"} p="8" lineHeight={1.9}>
               {disable_input_box ? (
                 //Taking input in to input boxes, and disabling those when click on submit
                 <InputChange

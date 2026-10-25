@@ -8,6 +8,7 @@ function Texts({ toggle, str_arr, handleHighlight, index }) {
           <Text
             as="span"
             key={idx}
+            fontSize="lg"
             onClick={() => handleHighlight(idx)}
             className={index.includes(idx) ? "highlight__yellow" : "hover-item"}
           >
@@ -20,6 +21,7 @@ function Texts({ toggle, str_arr, handleHighlight, index }) {
           <Text
             as="span"
             key={idx}
+            fontSize="lg"
             onClick={(e) => handleHighlight(e, idx)}
             className={index.includes(idx) ? "highlight" : "hover-item"}
           >

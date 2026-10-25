@@ -1,7 +1,3 @@
-// Grades a quiz without mutating the original words array.
-// `words` is the full split text, `blankIndexes` are the positions the user was
-// quizzed on, and `answers` are the typed answers in the same order as
-// blankIndexes once sorted ascending.
 export function gradeAnswers(words, blankIndexes, answers) {
   const sortedIndexes = [...blankIndexes].sort((a, b) => a - b);
   const graded = [...words];

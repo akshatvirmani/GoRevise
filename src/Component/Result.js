@@ -14,7 +14,7 @@ const Result = ({ str_arr }) => {
             {item.item ? (
               item.result === true ? (
                 <span key={idx} className="ans__true">
-                  {item.item.trim()}
+                  ✅ {item.item.trim()}
                 </span>
               ) : (
                 <span>
@@ -24,7 +24,7 @@ const Result = ({ str_arr }) => {
                     data-for={item.id}
                     key={idx}
                   >
-                    {item.item}
+                    ❌ {item.item}
                   </span>
                   <ReactTooltip id={item.id} place="top" effect="solid">
                     {item.prevVal}

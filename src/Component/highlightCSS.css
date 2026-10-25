@@ -1,45 +1,52 @@
 .hover-item{
-    border-radius: 6px;
-    padding: 1px 3px;
+    border-radius: 8px;
+    padding: 2px 4px;
     transition: background-color 0.15s ease, transform 0.1s ease;
     display: inline-block;
     cursor: pointer;
 }
 
 .hover-item:hover{
-    background-color: #eee;
-    transform: translateY(-1px);
+    background-color: rgba(78, 205, 196, 0.25);
+    transform: translateY(-1px) scale(1.05);
 }
 
 .highlight{
-    background-color: rgb(215, 215, 215);
-    border-radius: 6px;
-    padding: 1px 3px;
+    background-color: #C7B2F9;
+    color: #2C1C55;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 2px 4px;
     transition: background-color 0.15s ease, transform 0.15s ease;
 }
 
 .highlight__yellow{
-    background-color: yellow;
-    border-radius: 6px;
-    padding: 1px 3px;
+    background-color: #FFD23F;
+    color: #664908;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 2px 4px;
     transition: background-color 0.15s ease, transform 0.15s ease;
     animation: pop 0.2s ease;
+    display: inline-block;
 }
 
 @keyframes pop {
-    0% { transform: scale(0.85); }
-    60% { transform: scale(1.08); }
-    100% { transform: scale(1); }
+    0% { transform: scale(0.85) rotate(0deg); }
+    60% { transform: scale(1.12) rotate(-3deg); }
+    100% { transform: scale(1) rotate(0deg); }
 }
 
 .list {
     list-style:disc outside none;
     display: flex;
     font-size: 18px;
-
+    font-weight: 600;
 }
 .title{
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 800;
+    font-family: 'Baloo 2', cursive;
 }
 .field{
     margin-top: -100px;

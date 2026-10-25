@@ -6,29 +6,30 @@ function Instruction() {
     <div className="field">
       <Box
         color="white"
-        rounded={"2xl"}
-        px={"20"}
+        rounded={"24px"}
+        px={"10"}
+        py={4}
         m={20}
-        bg={"rgb(255,160,122,.9)"}
+        border="4px solid"
+        borderColor="grape.800"
+        bg={"sky.500"}
       >
-        <p className="title">Instructions:</p>
+        <p className="title">🧐 How it works:</p>
         <div className="tag">
           <p className="list">
-            Edit the text like a normal word document. You can add and remove
-            text too.
+            Type or paste your text below — like a normal word document.
           </p>
         </div>
         <div className="tag">
           <p className="list">
-            Click on "Highlight" <BiPencil fontSize={"20px"} color={"cyan"} />
-            and simply highlight the words you want to blank out.
+            Tap "Highlight" <BiPencil fontSize={"20px"} />
+            and pick the words you want to turn into blanks.
           </p>
         </div>
         <div className="tag">
           <p className="list">
-            After editing, click on "done"{" "}
-            <BiCheck fontSize={"30px"} color={"cyan"} /> to create your fill-in
-            quiz.
+            Hit "Done" <BiCheck fontSize={"24px"} /> to build your fill-in
+            quiz!
           </p>
         </div>
       </Box>

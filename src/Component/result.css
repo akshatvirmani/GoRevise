@@ -1,11 +1,25 @@
 .ans__true{
-    border:  1px solid green;
-    margin: 0 3px 0 3px;
+    background-color: #D9F7E4;
+    border: 2px solid #2E9E52;
+    color: #1E6B38;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 2px 8px;
+    margin: 0 3px;
+    display: inline-block;
 }
 
 .ans__false{
-    margin: 0 1px 0 1px;
-    border: 1px solid red;
+    background-color: #FFE1DE;
+    border: 2px solid #E8503F;
+    color: #9C2F24;
+    font-weight: 700;
+    text-decoration: line-through;
+    border-radius: 10px;
+    padding: 2px 8px;
+    margin: 0 3px;
+    display: inline-block;
+    cursor: help;
 }
 
 .tooltip{

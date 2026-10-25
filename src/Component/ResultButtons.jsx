@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Button, HStack, Text } from "@chakra-ui/react";
-import { BiCheck, BiShare, BiSpreadsheet } from "react-icons/bi";
+import { Box, HStack, IconButton, Text } from "@chakra-ui/react";
+import { BiCheck, BiSpreadsheet } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 function ResultButtons({
@@ -11,73 +11,58 @@ function ResultButtons({
 }) {
   return (
     <HStack
-      my={5}
-      bg="black"
+      bg="grape.600"
       color="white"
-      px={"8"}
-      justifyContent={"right"}
+      px={{ base: 4, md: 8 }}
+      justifyContent={"flex-end"}
       alignItems={"center"}
-      roundedTop={"2xl"}
-      py={1}
+      roundedTop={"24px"}
+      py={3}
+      spacing={6}
       textAlign="center"
       cursor="pointer"
     >
       {viewScore && (
-        <Box mx={5} onClick={onOpenScore}>
-          <Button
-            color={"cyan"}
-            backgroundColor={"black"}
-            _hover={"black"}
-            _focus={{ border: "none" }}
-            variant={"unstyled"}
-          >
-            <BiSpreadsheet fontSize={"30px"} color={"cyan"} />
-          </Button>
-          <Text className="textshift">view score</Text>
+        <Box onClick={onOpenScore}>
+          <IconButton
+            aria-label="View score"
+            icon={<BiSpreadsheet fontSize={"24px"} />}
+            colorScheme="whiteAlpha"
+            variant="ghost"
+            color="white"
+            rounded="full"
+            onClick={onOpenScore}
+          />
+          <Text fontWeight="700" fontSize="sm">Score 🏆</Text>
         </Box>
       )}
-      {/* {viewScore && (
-        <Box mx={5}>
-          <Button
-            color={"cyan"}
-            backgroundColor={"black"}
-            _hover={"black"}
-            _focus={{ border: "none" }}
-            variant={"unstyled"}
-          >
-            <BiShare fontSize={"30px"} color={"cyan"} />
-          </Button>
-          <Text className="textshift">Go back</Text>
-        </Box>
-      )} */}
       {viewScore && (
         <Link to="/">
-          <Box mx={5}>
-            <Button
-              color={"cyan"}
-              backgroundColor={"black"}
-              _hover={"black"}
-              _focus={{ border: "none" }}
-              variant={"unstyled"}
-            >
-              <BiCheck fontSize={"30px"} color={"cyan"} />
-            </Button>
-            <Text className="textshift">Done</Text>
+          <Box>
+            <IconButton
+              aria-label="Done"
+              icon={<BiCheck fontSize={"26px"} />}
+              colorScheme="whiteAlpha"
+              variant="ghost"
+              color="white"
+              rounded="full"
+            />
+            <Text fontWeight="700" fontSize="sm">Done</Text>
           </Box>
         </Link>
       )}
       {viewDone && (
-        <Box mx={5} onClick={(e) => handleViewScore_and_done()}>
-          <Button
-            color={"cyan"}
-            backgroundColor={"black"}
-            _hover={"black"}
-            _focus={{ border: "none" }}
-            variant={"unstyled"}
-          >
-            <BiCheck fontSize={"30px"} color={"cyan"} />
-          </Button>
-          <Text className="textshift">Done </Text>
+        <Box onClick={(e) => handleViewScore_and_done()}>
+          <IconButton
+            aria-label="Done"
+            icon={<BiCheck fontSize={"26px"} />}
+            colorScheme="whiteAlpha"
+            variant="ghost"
+            color="white"
+            rounded="full"
+            onClick={(e) => handleViewScore_and_done()}
+          />
+          <Text fontWeight="700" fontSize="sm">Done</Text>
         </Box>
       )}
     </HStack>

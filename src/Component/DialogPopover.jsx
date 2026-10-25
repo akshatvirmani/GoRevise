@@ -12,13 +12,20 @@ import {
   Center,
   Box,
   HStack,
-  Circle,
   Flex,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Confetti from "./Confetti";
 
-const MotionCircle = motion(Circle);
+const MotionBox = motion(Box);
+
+const messageFor = (pct) => {
+  if (pct === 100) return "Perfect score! You're a superstar! 🌟";
+  if (pct >= 75) return "Awesome job! You really know your stuff! 🎉";
+  if (pct >= 50) return "Nice work! Keep it up, champ! 🎸";
+  return "Good try! Practice makes perfect 💪";
+};
 
 const ReturnFocus = ({
   isOpen,
@@ -30,8 +37,10 @@ const ReturnFocus = ({
   const ca = correct_ans_count();
   const percentage = Math.round((ca / count_blank) * 100);
   const [displayPercentage, setDisplayPercentage] = useState(0);
+  const ringTrack = useColorModeValue("#F2F1FA", "#412A7D");
+  const modalBg = useColorModeValue("white", "ink.600");
+  const modalBorder = useColorModeValue("ink.700", "sunny.400");
 
-  // Count the score up from 0 whenever the modal opens, instead of just snapping to the final number.
   useEffect(() => {
     if (!isOpen) {
       setDisplayPercentage(0);
@@ -51,82 +60,88 @@ const ReturnFocus = ({
 
   return (
     <>
-      <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
+      <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
-        <ModalContent size="4xl" position="relative" overflow="hidden">
+        <ModalContent
+          size="4xl"
+          position="relative"
+          overflow="hidden"
+          bg={modalBg}
+          borderRadius="28px"
+          border="5px solid"
+          borderColor={modalBorder}
+        >
           {isOpen && percentage >= 50 && <Confetti key={String(isOpen)} />}
           <ModalHeader
-            my={"4"}
+            my={"2"}
             textAlign="center"
-            fontSize="3xl"
+            fontSize="2xl"
             fontWeight="bold"
           >
-            Your final percentage is
-            <Text fontSize="2xl" fontWeight="bold">
-              🥁 (Drumroll) 🥁
-            </Text>
+            🥁 Drumroll please... 🥁
           </ModalHeader>
           <Box>
             <Center>
-              <MotionCircle
+              <MotionBox
                 key={String(isOpen)}
-                initial={{ scale: 0.4, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
+                initial={{ scale: 0.4, opacity: 0, rotate: -10 }}
+                animate={{ scale: 1, opacity: 1, rotate: 0 }}
                 transition={{ type: "spring", stiffness: 260, damping: 16 }}
-                size="110px"
-                bg="#f0f0f0"
-                color="back"
-                fontSize="3xl"
-                fontWeight="bold"
-                mt={"-25px"}
+                width="140px"
+                height="140px"
+                borderRadius="full"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                sx={{
+                  background: `conic-gradient(#FF6B6B ${displayPercentage}%, ${ringTrack} 0)`,
+                }}
               >
-                <Text>{displayPercentage}%</Text>
-              </MotionCircle>
+                <Center
+                  bg={modalBg}
+                  width="112px"
+                  height="112px"
+                  borderRadius="full"
+                  fontSize="2xl"
+                  fontWeight="800"
+                  border="3px solid"
+                  borderColor={modalBorder}
+                >
+                  {displayPercentage}%
+                </Center>
+              </MotionBox>
             </Center>
           </Box>
 
-          <Box mt={"10"} fontSize="lg" fontWeight="600">
-            <Center mt={"-34px"}>
-              {percentage >= 50
-                ? "Go..little..Rockstar 🎸"
-                : "You must be in Spain without the 'S' 😩"}
-            </Center>
+          <Box mt={"5"} fontSize="lg" fontWeight="700" textAlign="center" px={4}>
+            {messageFor(percentage)}
           </Box>
-          <ModalCloseButton />
-          <ModalBody mt={"-20px"}>
-            <Box>
-              <HStack mt={"15px"} ml={"30px"}>
-                <Flex direction={"column"}>
-                  <Text>Fill in the blanks: {count_blank}</Text>
-                  <Text>Correct answers: {ca}</Text>
-                  <Text>
-                    Wrong answers:&nbsp;
-                    <Text display={"inline"} ml={"-1px"}>
-                      {" "}
-                      {count_blank - ca}
-                    </Text>
-                  </Text>
+          <ModalCloseButton borderRadius="full" />
+          <ModalBody mt={"2"}>
+            <Center>
+              <HStack spacing={6}>
+                <Flex direction={"column"} align="center">
+                  <Text fontSize="2xl">📝</Text>
+                  <Text fontWeight="700">{count_blank}</Text>
+                  <Text fontSize="sm">blanks</Text>
+                </Flex>
+                <Flex direction={"column"} align="center">
+                  <Text fontSize="2xl">✅</Text>
+                  <Text fontWeight="700">{ca}</Text>
+                  <Text fontSize="sm">correct</Text>
+                </Flex>
+                <Flex direction={"column"} align="center">
+                  <Text fontSize="2xl">❌</Text>
+                  <Text fontWeight="700">{count_blank - ca}</Text>
+                  <Text fontSize="sm">wrong</Text>
                 </Flex>
               </HStack>
-            </Box>
+            </Center>
           </ModalBody>
 
-          <ModalFooter>
-            <Button
-              bg="#14dbd1"
-              mr={"auto"}
-              ml="auto"
-              mt={"-10px"}
-              mb={"8px"}
-              w={"230px"}
-              fontSize="23px"
-              fontWeight="extrabold"
-              letterSpacing={"0.5px"}
-              onClick={onClose}
-              borderRadius="60px"
-              boxShadow="rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px"
-            >
-              View Answers
+          <ModalFooter justifyContent="center">
+            <Button colorScheme="sunny" rounded="full" size="lg" px={10} onClick={onClose}>
+              👀 View Answers
             </Button>
           </ModalFooter>
         </ModalContent>

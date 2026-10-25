@@ -9,20 +9,21 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React from "react";
-import { MdOutlineCreate, MdReply, MdEdit, MdShare } from "react-icons/md";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import { buildShareUrl } from "../utils/shareQuiz";
 
 const SaveAndTakeQuiz = ({ handleSave, handleEditBlanks, shareableQuiz }) => {
-  const cardBg = useColorModeValue("gray.100", "gray.700");
+  const cardBg = useColorModeValue("white", "ink.600");
+  const cardBorder = useColorModeValue("ink.700", "sunny.400");
+  const shadowColor = useColorModeValue("#2B2250", "#00000055");
   const toast = useToast();
 
   const handleCopyShareLink = async () => {
     const url = buildShareUrl(shareableQuiz);
     try {
       await navigator.clipboard.writeText(url);
-      toast({ title: "Share link copied!", status: "success", duration: 2000 });
+      toast({ title: "Share link copied! 🔗", status: "success", duration: 2000 });
     } catch {
       toast({ title: "Couldn't copy link", status: "error", duration: 2000 });
     }
@@ -30,78 +31,43 @@ const SaveAndTakeQuiz = ({ handleSave, handleEditBlanks, shareableQuiz }) => {
 
   return (
     <>
-      <Navbar color="gray.200" />
+      <Navbar />
       <Center>
-      <Link to='/create'>
-        <Button
-          rounded={"full"}
-          size={"lg"}
-          mt={20}
-          px={6}
-          bg={"cyan.400"}
-          _hover={{ bg: "cyan.500" }}
-          _focus={{ border: "none" }}
-
-        >
-          <MdReply fontSize={"28px"} />
-          <Text>Go Back</Text>
-        </Button>
+        <Link to="/create">
+          <Button rounded={"full"} size={"md"} mt={4} px={6} colorScheme="sky">
+            ↩ Go Back
+          </Button>
         </Link>
       </Center>
-      <Center pt="24" mt={"-60px"}>
+      <Center pt="10" pb={16}>
         <Flex
-          h={"420px"}
-          w={"350px"}
+          h={"460px"}
+          w={"360px"}
           bg={cardBg}
           flexDir={"column"}
           justifyContent={"space-around"}
           alignItems={"center"}
-          rounded={"3xl"}
-          marginLeft="20px"
-          transition={"transform 0.2s ease, box-shadow 0.2s ease"}
-          _hover={{ transform: "translateY(-6px)", boxShadow: "xl" }}
+          rounded={"28px"}
+          border="5px solid"
+          borderColor={cardBorder}
+          boxShadow={`10px 10px 0 0 ${shadowColor}`}
         >
           <Box textAlign={"center"}>
-            <Heading>Take the Quiz</Heading>
-            <Text mt={7} fontSize={"xl"}>
-              Challenge yourself and take the quiz
-            </Text>
-            <Text mt={7} fontSize={"xl"}>
-              We will be rooting for you.
+            <Text fontSize="6xl">🎉</Text>
+            <Heading mt={2}>Ready, Set, Quiz!</Heading>
+            <Text mt={3} fontSize={"lg"} px={6}>
+              Challenge yourself and see how many you get right!
             </Text>
           </Box>
           <Box mt={-5} display={"flex"} flexDir={"column"} gap={3} alignItems={"center"}>
-            <Button
-              rounded={"full"}
-              size={"lg"}
-              px={6}
-              bg={"cyan.400"}
-              _hover={{ bg: "cyan.500" }}
-              _focus={{ border: "none" }}
-              onClick={() => handleSave(false)}
-            >
-              <MdOutlineCreate fontSize={"24px"} />
-              <Text>Quiz</Text>
+            <Button rounded={"full"} size={"lg"} px={8} colorScheme="brand" onClick={() => handleSave(false)}>
+              🚀 Start Quiz
             </Button>
-            <Button
-              rounded={"full"}
-              size={"sm"}
-              px={6}
-              variant={"outline"}
-              onClick={handleEditBlanks}
-            >
-              <MdEdit fontSize={"18px"} />
-              <Text ml={1}>Edit Blanks</Text>
+            <Button rounded={"full"} size={"sm"} px={6} variant={"outline"} colorScheme="grape" onClick={handleEditBlanks}>
+              ✏️ Edit Blanks
             </Button>
-            <Button
-              rounded={"full"}
-              size={"sm"}
-              px={6}
-              variant={"outline"}
-              onClick={handleCopyShareLink}
-            >
-              <MdShare fontSize={"18px"} />
-              <Text ml={1}>Copy Share Link</Text>
+            <Button rounded={"full"} size={"sm"} px={6} variant={"outline"} colorScheme="sky" onClick={handleCopyShareLink}>
+              🔗 Copy Share Link
             </Button>
           </Box>
         </Flex>

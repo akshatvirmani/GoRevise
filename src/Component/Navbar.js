@@ -7,56 +7,91 @@ import {
   IconButton,
   Text,
   chakra,
-  useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useColorMode } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BiSun, BiMoon } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const MotionBox = motion(Box);
 
-function Navbar({ color = "white" }) {
+const NAV_LINKS = [
+  { to: "/", label: "Home" },
+  { to: "/progress", label: "Progress" },
+  { to: "/about", label: "About" },
+];
+
+function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
-  const bg = useColorModeValue(color, "gray.700");
-  const headingColor = useColorModeValue("black", "white");
+  const location = useLocation();
+  const bg = useColorModeValue("white", "ink.600");
+  const border = useColorModeValue("ink.700", "sunny.400");
+  const headingColor = useColorModeValue("ink.800", "white");
+  const linkInactive = useColorModeValue("ink.600", "ink.100");
 
   return (
-    <Center>
+    <Center px={{ base: 2, md: 0 }}>
       <MotionBox
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
+        initial={{ opacity: 0, y: -16, rotate: -1 }}
+        animate={{ opacity: 1, y: 0, rotate: 0 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
         bg={bg}
-        m={10}
-        w={"70rem"}
-        borderRadius={"25px"}
+        border="4px solid"
+        borderColor={border}
+        boxShadow={`6px 6px 0 0 ${useColorModeValue("#2B2250", "#FFD23F")}`}
+        m={{ base: 4, md: 10 }}
+        w={{ base: "95%", md: "70rem" }}
+        borderRadius={"28px"}
         py="2"
       >
         <Flex
-          justifyContent={"space-around"}
+          justifyContent={"space-between"}
           alignItems={"center"}
-          height={"50px"}
+          height={"56px"}
+          px={{ base: 3, md: 6 }}
         >
           <Link to="/">
-            <chakra.a>
-              <Heading color={headingColor}>
+            <chakra.a display="flex" alignItems="center" gap={2}>
+              <motion.span
+                style={{ fontSize: "28px", display: "inline-block" }}
+                animate={{ rotate: [0, -10, 10, -6, 0] }}
+                transition={{ duration: 2.2, repeat: Infinity, repeatDelay: 2 }}
+              >
+                ✏️
+              </motion.span>
+              <Heading size={{ base: "md", md: "lg" }} color={headingColor}>
                 Go
-                <Text as={"span"} color={"teal.300"}>
+                <Text as={"span"} color={"brand.500"}>
                   Revise
                 </Text>
               </Heading>
             </chakra.a>
           </Link>
-          <Flex
-            w={"240px"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-            fontSize={"lg"}
-            color={headingColor}
-          >
-            <Link to="/">Home</Link>
-            <Link to="/contact">Contact</Link>
+
+          <Flex alignItems={"center"} gap={{ base: 1, md: 3 }}>
+            {NAV_LINKS.map((link) => {
+              const active = location.pathname === link.to;
+              return (
+                <chakra.a
+                  as={Link}
+                  key={link.to}
+                  to={link.to}
+                  fontFamily="heading"
+                  fontWeight="700"
+                  fontSize={{ base: "sm", md: "md" }}
+                  px={3}
+                  py={1}
+                  borderRadius="full"
+                  bg={active ? "sunny.300" : "transparent"}
+                  color={active ? "ink.800" : linkInactive}
+                  _hover={{ bg: "sunny.200", color: "ink.800" }}
+                  transition="all 0.15s ease"
+                >
+                  {link.label}
+                </chakra.a>
+              );
+            })}
             <Box position="relative" width="32px" height="32px">
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
@@ -73,6 +108,7 @@ function Navbar({ color = "white" }) {
                     onClick={toggleColorMode}
                     size={"sm"}
                     variant={"ghost"}
+                    borderRadius="full"
                     color={headingColor}
                   />
                 </motion.div>

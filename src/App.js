@@ -1,24 +1,21 @@
 import "./App.css";
-import Contact from "./Component/Contact";
+import About from "./Component/About";
+import Progress from "./Component/Progress";
 import Create from "./Component/Create";
 import Home from "./Component/Home";
 import Quiz from "./Component/Quiz";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 import InputHighlight from "./Component/Input_highlight";
 
 function PageTransition({ children }) {
+  const location = useLocation();
   return (
     <motion.div
+      key={location.pathname}
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -12 }}
-      transition={{ duration: 0.22, ease: "easeInOut" }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
     >
       {children}
     </motion.div>
@@ -26,17 +23,17 @@ function PageTransition({ children }) {
 }
 
 function AnimatedRoutes() {
-  const location = useLocation();
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" exact element={<PageTransition><Home /></PageTransition>} />
-        <Route path="/quiz" exact element={<PageTransition><Quiz /></PageTransition>} />
-        <Route path="/test" exact element={<PageTransition><InputHighlight /></PageTransition>} />
-        <Route path="/create" exact element={<PageTransition><Create /></PageTransition>} />
-        <Route path="/contact" exact element={<PageTransition><Contact /></PageTransition>} />
+    <PageTransition>
+      <Routes>
+        <Route path="/" exact element={<Home />} />
+        <Route path="/quiz" exact element={<Quiz />} />
+        <Route path="/test" exact element={<InputHighlight />} />
+        <Route path="/create" exact element={<Create />} />
+        <Route path="/progress" exact element={<Progress />} />
+        <Route path="/about" exact element={<About />} />
       </Routes>
-    </AnimatePresence>
+    </PageTransition>
   );
 }
 

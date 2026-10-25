@@ -1,11 +1,10 @@
 import React from "react";
-import { Box, Button, HStack, Text } from "@chakra-ui/react";
+import { Box, HStack, IconButton, Text } from "@chakra-ui/react";
 import { BiUndo, BiCheck, BiPencil, BiShuffle } from "react-icons/bi";
 import "./highlightCSS.css";
 
 const ShowButtons = ({
   editText,
-
   highlight,
   handleDone,
   inputText,
@@ -15,70 +14,68 @@ const ShowButtons = ({
   return (
     <HStack
       cursor="pointer"
-      my={5}
-      bg="black"
+      bg="grape.600"
       color="white"
       justifyContent={"center"}
       alignItems={"center"}
-      roundedTop={"2xl"}
-      py={1}
+      roundedTop={"24px"}
+      py={3}
+      spacing={{ base: 4, md: 8 }}
       textAlign="center"
     >
-      <Box mx={5} style={{ marginRight: "10px" }}>
-        <Button
-          color={"cyan"}
-          backgroundColor={"black"}
-          _hover={"black"}
-          _focus={{ border: "none" }}
-          variant={"unstyled"}
+      <Box onClick={(e) => editText(e, inputText)}>
+        <IconButton
+          aria-label="Edit"
+          icon={<BiUndo fontSize={"24px"} />}
+          colorScheme="whiteAlpha"
+          variant="ghost"
+          color="white"
+          rounded="full"
           onClick={(e) => editText(e, inputText)}
-        >
-          <BiUndo fontSize={"30px"} color={"cyan"} />
-        </Button>
-        <Text className="textshift">Edit</Text>
+        />
+        <Text fontWeight="700" fontSize="sm">Edit</Text>
       </Box>
 
       {!isHighlight_Done && (
-        <Box mx={5} onClick={highlight} style={{ marginRight: "10px" }}>
-          <Button
-            color={"cyan"}
-            backgroundColor={"black"}
-            _hover={"black"}
-            _focus={{ border: "none" }}
-            variant={"unstyled"}
-          >
-            <BiPencil fontSize={"30px"} color={"cyan"} />
-          </Button>
-          <Text className="textshift">Highlight</Text>
+        <Box onClick={highlight}>
+          <IconButton
+            aria-label="Highlight"
+            icon={<BiPencil fontSize={"24px"} />}
+            colorScheme="whiteAlpha"
+            variant="ghost"
+            color="white"
+            rounded="full"
+            onClick={highlight}
+          />
+          <Text fontWeight="700" fontSize="sm">Highlight</Text>
         </Box>
       )}
       {!isHighlight_Done && (
-        <Box mx={5} onClick={handleAutoBlank} style={{ marginRight: "10px" }}>
-          <Button
-            color={"cyan"}
-            backgroundColor={"black"}
-            _hover={"black"}
-            _focus={{ border: "none" }}
-            variant={"unstyled"}
-          >
-            <BiShuffle fontSize={"30px"} color={"cyan"} />
-          </Button>
-          <Text className="textshift">Auto-blank</Text>
+        <Box onClick={handleAutoBlank}>
+          <IconButton
+            aria-label="Auto-blank"
+            icon={<BiShuffle fontSize={"24px"} />}
+            colorScheme="whiteAlpha"
+            variant="ghost"
+            color="white"
+            rounded="full"
+            onClick={handleAutoBlank}
+          />
+          <Text fontWeight="700" fontSize="sm">Auto-blank 🎲</Text>
         </Box>
       )}
       {isHighlight_Done && (
-        <Box mx={5} onClick={handleDone}>
-          <Button
-            color={"cyan"}
-            backgroundColor={"black"}
-            _hover={"black"}
-            _focus={{ border: "none" }}
-            variant={"unstyled"}
-            // variant={"unstyled"}
-          >
-            <BiCheck fontSize={"30px"} color={"cyan"} />
-          </Button>
-          <Text className="textshift">Done</Text>
+        <Box onClick={handleDone}>
+          <IconButton
+            aria-label="Done"
+            icon={<BiCheck fontSize={"26px"} />}
+            colorScheme="whiteAlpha"
+            variant="ghost"
+            color="white"
+            rounded="full"
+            onClick={handleDone}
+          />
+          <Text fontWeight="700" fontSize="sm">Done</Text>
         </Box>
       )}
     </HStack>

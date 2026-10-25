@@ -1,4 +1,3 @@
-// encodeURIComponent output is pure ASCII, so it's always safe to hand to btoa.
 export function encodeQuiz({ text, blankIndexes }) {
   return btoa(encodeURIComponent(JSON.stringify({ text, blankIndexes })));
 }
